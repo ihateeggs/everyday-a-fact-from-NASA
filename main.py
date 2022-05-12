@@ -1,6 +1,10 @@
 import requests
-import time
 # import sys
+import time
+from datetime import datetime
+
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
 
 dt = int(time.time())
 
@@ -14,10 +18,21 @@ param_ns = response_ns.json()
 param_wt = response_wt.json()
 
 ctemp = '%.2f' % (float(param_wt['current']['temp']) -273.15)
+ftemp = '%.2f' % (float(param_wt['current']['feels_like']) -273.15)
 
-print (f"[{param_ns['date']}]")
-print(f"Current temperature in Hanoi is: {ctemp} °C \n")
-print (param_ns['explanation'])
+crw = param_wt['current']['weather'][0]
+
+
+
+#Print stuff here
+print (f"[{param_ns['date']} - {current_time}]")
+
+#WEATHER:
+print(f"\nCurrent temperature in Hanoi is: {ctemp}°C & Feel like {ftemp}°C")
+print(f"The weather now: {crw['description']}\n")
+
+#NASA
+print (f"Now to the fact of the day:\n{param_ns['explanation']}")
 print("\n")
 print(f"Here is link of {param_ns['title']}: {param_ns['url']} \n")
 print("Have a nice day!!!")
